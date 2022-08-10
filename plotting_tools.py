@@ -27,7 +27,7 @@ def plotGraphOnCanvas(self, layout, selection = None, title = "", scale="linear"
     plotgGraphFigure(data, canvas, selection = selection, filename=self.filename, title=title, scale=scale)
     layout.addWidget(canvas)
     dtFmt = mdates.DateFormatter('%H:%M:%S')
-    figure.gca().xaxis.set_major_formatter(dtFmt)  # apply the format to the desired axis
+    figure.gca().xaxis.set_major_formatter(dtFmt)
     figurecanvas = [figure, canvas]
     self.toolbar = NavigationToolbar(canvas, self)
     layout.addWidget(self.toolbar)
