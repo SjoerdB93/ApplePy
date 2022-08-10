@@ -3,6 +3,7 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 import matplotlib.dates as mdates
 import pandas as pd
+import seaborn as sns
 
 def plotGraphOnCanvas(self, layout, selection = None, title = "", scale="linear"):
     if self.type == "current":
@@ -26,7 +27,7 @@ def plotGraphOnCanvas(self, layout, selection = None, title = "", scale="linear"
     plotgGraphFigure(data, canvas, selection = selection, filename=self.filename, title=title, scale=scale)
     layout.addWidget(canvas)
     dtFmt = mdates.DateFormatter('%H:%M:%S')
-    figure.gca().xaxis.set_major_formatter(dtFmt)  # apply the format to the desired axis
+    figure.gca().xaxis.set_major_formatter(dtFmt)
     figurecanvas = [figure, canvas]
     self.toolbar = NavigationToolbar(canvas, self)
     layout.addWidget(self.toolbar)
@@ -52,6 +53,7 @@ class PlotWidget(FigureCanvas):
     def __init__(self, parent=None, xlabel=None, ylabel='Intensity (arb. u)', title="", scale="linear"):
         super(PlotWidget, self).__init__(Figure())
         self.setParent(parent)
+        sns.set_theme(style="whitegrid")
         self.figure = Figure()
         self.canvas = FigureCanvas(self.figure)
         self.theplot = self.figure.add_subplot(111)
