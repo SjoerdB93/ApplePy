@@ -86,6 +86,16 @@
         </item>
         <item>
          <property name="text">
+          <string>Ar Flow (SCCM)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>N2 Flow (SCCM)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
           <string>Ticks</string>
          </property>
         </item>

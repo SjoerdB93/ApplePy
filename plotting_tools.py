@@ -11,6 +11,8 @@ def plotGraphOnCanvas(self, layout, selection = None, title = "", scale="linear"
         ylabel = "Voltage (V)"
     elif self.type == "coil_current":
         ylabel = "Current (A)"
+    elif self.type == "gas":
+        ylabel = "Gas flow (SCCM)"
     elif self.type == "power":
         ylabel = "Power (W)"
     elif self.type == "ticks":
