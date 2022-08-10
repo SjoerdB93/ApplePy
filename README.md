@@ -1,3 +1,4 @@
+<<<<<<< README.md
 This program is free software.
 It is licensed under the GNU GPL version 3 or later.
 That means you are free to use this program for any purpose;
@@ -8,13 +9,5 @@ you must grant the recipients the same freedoms.
 To be more specific: you must share the source code under the same license.
 For details see https://www.gnu.org/licenses/gpl-3.0.html
 
-# Datman
-Data manipulator, will mainly be useful for plotting graphs and doing basic manipulation on them such as cutting, translations and multiplications.
-
-Early alpha version. The following features are implemented at the moment:
-- Opening two-column text files with XY-data
-- Selecting data by clicking and dragging
-- Cutting selected data from graph
-- Saving new edited data as txt file
-
-Planned features include both translation and multiplication of both X and Y axis at least.
+# Malus - Adam Logbook Viewer
+This is a simple logbook viewer tool written to read the log files from the Adam deposition system at Linköping University. 
