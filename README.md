@@ -1,4 +1,4 @@
-<<<<<<< README.md
+README.md
 This program is free software.
 It is licensed under the GNU GPL version 3 or later.
 That means you are free to use this program for any purpose;
