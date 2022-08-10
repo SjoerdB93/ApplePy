@@ -1,12 +1,8 @@
 # CallUI.py
 import sys
 from PyQt5 import QtWidgets, uic
-from PyQt5.QtWidgets import QFileDialog
 import plotting_tools
-from data import Data
 import malus
-from graph import Graph
-import numpy as np
 
 Ui_MainWindow, QtBaseClass = uic.loadUiType("form.ui")
 

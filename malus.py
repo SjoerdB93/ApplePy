@@ -50,8 +50,10 @@ def plot_selection(self):
             self.type = "voltage"
         elif selection == "N2 Flow (SCCM)":
             selection = "n2_flow"
+            type = "gas"
         elif selection == "Ar Flow (SCCM)":
             selection = "ar_flow"
+            type = "gas"
         elif selection == "Ticks":
             selection = "time"
             self.type = "ticks"
@@ -63,8 +65,8 @@ def plot_selection(self):
 def get_data(file_path):
     df = pd.read_csv(file_path, sep="\s+", decimal=",", skiprows=2)
     df.columns = ["time", "coil1_current", "coil2_current", "bias_voltage", "value3", "mdx2_current", "mdx2_power",
-                  "mdx2_voltage", "mdx1_current", "value11", "value12", "value13", "value14", "value15", "n2_flow",
-                  "ar_flow", "value16", "mdx1_power", "mdx1_voltage", "value19", "value20"]
+                  "mdx2_voltage", "mdx1_current", "value11", "value12", "value13", "value14", "value15", "value17",
+                  "value_18", "value16", "mdx1_power", "mdx1_voltage", "ar_flow", "n2_flow"]
     return df
 
 def define_canvas(self):
