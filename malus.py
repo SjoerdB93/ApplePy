@@ -8,10 +8,11 @@ import numpy as np
 def load_data(self):
     file_path = get_path(self)
     if file_path != "":
-        self.filename = Path(file_path).name
         data = get_data(file_path)
-        self.dataframe = data
-        plot_selection(self)
+        if data is not None:
+            self.filename = Path(file_path).name
+            self.dataframe = data
+            plot_selection(self)
 
 
 
@@ -31,7 +32,24 @@ def export_data(self):
             filename = filename + ".txt"
 
         xdata = self.dataframe["time"]
-        ydata = self.dataframe[self.selection]
+        if self.selection == "time_vs_ticks":
+            ydata = list(range(len(xdata)))
+        elif self.selection == "delay_second":
+            ydata = []
+            for i in range(len(xdata)):
+                if i != len(xdata) - 1:
+                    ydata.append(xdata[i] - xdata[i + 1] + 1)
+                else:
+                    ydata.append(0)
+                i += 1
+        elif self.selection == "delay_total":
+            ydata = []
+            for i in range(len(xdata)):
+                ydata.append(xdata[i] - i - 2)
+                i += 1
+        else:
+            ydata = self.dataframe[self.selection]
+
         array = np.stack([xdata, ydata], axis=1)
         np.savetxt(filename, array, delimiter="\t")
 
@@ -85,6 +103,9 @@ def get_selection(self):
     elif selection == "Total delay":
         selection = "delay_total"
         self.type = "delay_total"
+    elif selection == "Time vs ticks":
+        selection = "time_vs_ticks"
+        self.type = "ticks"
     else:
         self.type = "other"
     self.selection = selection
@@ -92,9 +113,13 @@ def get_selection(self):
 
 def get_data(file_path):
     df = pd.read_csv(file_path, sep="\s+", decimal=",", skiprows=2)
-    df.columns = ["time", "coil1_current", "coil2_current", "bias_voltage", "value3", "mdx2_current", "mdx2_power",
+    try:
+        df.columns = ["time", "coil1_current", "coil2_current", "bias_voltage", "value3", "mdx2_current", "mdx2_power",
                   "mdx2_voltage", "mdx1_current", "value11", "value12", "value13", "value14", "value15", "value17",
                   "value18", "value16", "mdx1_power", "mdx1_voltage", "ar_flow", "n2_flow"]
+    except ValueError:
+        print("Could not read file, are you sure this is an Adam log?")
+        df = None
     return df
 
 def define_canvas(self):
@@ -116,11 +141,9 @@ def create_layout(self, canvas, layout):
 
 
 def get_path(self, documenttype="Text file (*.txt);;All Files (*)"):
-    print("Yo")
     dialog = QFileDialog
     options = dialog.Options()
     options |= QFileDialog.DontUseNativeDialog
     path = QFileDialog.getOpenFileName(self, "Open files", "",
                                         documenttype, options=options)[0]
-    print(path)
     return path

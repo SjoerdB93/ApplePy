@@ -103,16 +103,6 @@
         </item>
         <item>
          <property name="text">
-          <string>Delay per second</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Total delay</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
           <string>value11</string>
          </property>
         </item>
@@ -149,6 +139,21 @@
         <item>
          <property name="text">
           <string>value18</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Delay per second</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Total delay</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Time vs ticks</string>
          </property>
         </item>
        </widget>

@@ -21,6 +21,8 @@ def plotGraphOnCanvas(self, layout, selection = None, title = "", scale="linear"
         ylabel = "Total delay (s)"
     elif self.type == "delay_second":
         ylabel = "Delay per second (s)"
+    elif self.type == "ticks":
+        ylabel = "Ticks"
     else:
         ylabel = "Value"
     canvas = PlotWidget(xlabel="Time (H:m:s)", ylabel=ylabel,
@@ -42,7 +44,11 @@ def plotgGraphFigure(df, canvas, selection = None, filename="", xlim=None, title
     fig = canvas.theplot
     time = df["time"]
     t = pd.to_datetime(time, unit='s')  # convert to datetime
-    if selection == "delay_second":
+
+    if selection == "time_vs_ticks":
+        ticks = list(range(len(time)))
+        fig.plot(t, ticks, label=filename, linestyle=linestyle, marker=marker)
+    elif selection == "delay_second":
         time_diff = []
         for i in range(len(time)):
             if i != len(time) - 1:
