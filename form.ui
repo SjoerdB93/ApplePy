@@ -34,7 +34,7 @@
       <item>
        <widget class="QPushButton" name="export_button">
         <property name="text">
-         <string>Export data to txt</string>
+         <string>Save graph as txt</string>
         </property>
        </widget>
       </item>
@@ -109,6 +109,46 @@
         <item>
          <property name="text">
           <string>Total delay</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>value11</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>value12</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>value13</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>value14</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>value15</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>value16</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>value17</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>value18</string>
          </property>
         </item>
        </widget>
