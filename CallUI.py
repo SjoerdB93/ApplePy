@@ -15,6 +15,7 @@ class CallUI(QtBaseClass, Ui_MainWindow):
         self.filename = None
         self.figurecanvas = None
         self.type = None
+        self.selection = None
         self.setupUi(self)
         self.connect_actions()
         malus.load_empty(self)
@@ -22,6 +23,8 @@ class CallUI(QtBaseClass, Ui_MainWindow):
     def connect_actions(self):
         self.load_data_button.clicked.connect(lambda: malus.load_data(self))
         self.selected_item.activated.connect(lambda: malus.plot_selection(self))
+        self.export_button.clicked.connect(lambda: malus.export_data(self))
+
 
     def clear_layout(self, layout):
         while layout.count():

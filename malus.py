@@ -3,7 +3,7 @@ from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as Navigatio
 from PyQt5.QtWidgets import QFileDialog
 import pandas as pd
 from pathlib import Path
-
+import numpy as np
 
 def load_data(self):
     try:
@@ -14,6 +14,29 @@ def load_data(self):
         plot_selection(self)
     except:
         pass
+
+
+
+def saveFileDialog(self, documenttype="Text file (*.txt)", title = "Save file"):
+    options = QFileDialog.Options()
+    options |= QFileDialog.DontUseNativeDialog
+    filename = f"{self.filename[:-4]}_{self.selection}.txt"
+    fileName = QFileDialog.getSaveFileName(self, title, filename,
+                                           documenttype, options=options)
+    return fileName
+
+def export_data(self):
+    if self.filename is not None:
+        path = saveFileDialog(self, title = "Save selected data")
+        filename = path[0]
+        if filename[-4:] != ".txt":
+            filename = filename + ".txt"
+
+        xdata = self.dataframe["time"]
+        ydata = self.dataframe[self.selection]
+        array = np.stack([xdata, ydata], axis=1)
+        np.savetxt(filename, array, delimiter="\t")
+
 
 def plot_selection(self):
     if self.dataframe is not None:
@@ -50,15 +73,19 @@ def plot_selection(self):
             self.type = "voltage"
         elif selection == "N2 Flow (SCCM)":
             selection = "n2_flow"
-            type = "gas"
+            self.type = "gas"
         elif selection == "Ar Flow (SCCM)":
             selection = "ar_flow"
-            type = "gas"
-        elif selection == "Ticks":
-            selection = "time"
-            self.type = "ticks"
+            self.type = "gas"
+        elif selection == "Delay per second":
+            selection = "delay_second"
+            self.type = "delay_second"
+        elif selection == "Total delay":
+            selection = "delay_total"
+            self.type = "delay_total"
         else:
             selection = "coil1_current"
+        self.selection = selection
         self.plot_figure(title = title, selection=selection)
 
 
