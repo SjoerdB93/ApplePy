@@ -32,6 +32,13 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="export_button">
+        <property name="text">
+         <string>Save graph as txt</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QComboBox" name="selected_item">
         <property name="minimumSize">
          <size>
@@ -96,9 +103,66 @@
         </item>
         <item>
          <property name="text">
-          <string>Ticks</string>
+          <string>value11</string>
          </property>
         </item>
+        <item>
+         <property name="text">
+          <string>value12</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>value13</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>value14</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>value15</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>value16</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>value17</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>value18</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Delay per second</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Total delay</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Time vs ticks</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <widget class="Line" name="line_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
        </widget>
       </item>
       <item>
