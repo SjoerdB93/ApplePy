@@ -8,6 +8,6 @@ you must grant the recipients the same freedoms.
 To be more specific: you must share the source code under the same license.
 For details see https://www.gnu.org/licenses/gpl-3.0.html
 
-# Pomaceous - Adam Logbook Viewer
-Pomaceous is a simple logbook viewer tool written to read the log files from
+# ApplePy - Adam Logbook Viewer
+ApplePy is a simple logbook viewer tool written to read the log files from
 the Adam deposition system at Linköping University. 
