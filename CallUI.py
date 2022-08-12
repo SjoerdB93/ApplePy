@@ -2,7 +2,7 @@
 import sys
 from PyQt5 import QtWidgets, uic
 import plotting_tools
-import malus
+import pomaceous
 
 Ui_MainWindow, QtBaseClass = uic.loadUiType("form.ui")
 
@@ -18,12 +18,12 @@ class CallUI(QtBaseClass, Ui_MainWindow):
         self.selection = None
         self.setupUi(self)
         self.connect_actions()
-        malus.load_empty(self)
+        pomaceous.load_empty(self)
 
     def connect_actions(self):
-        self.load_data_button.clicked.connect(lambda: malus.load_data(self))
-        self.selected_item.activated.connect(lambda: malus.plot_selection(self))
-        self.export_button.clicked.connect(lambda: malus.export_data(self))
+        self.load_data_button.clicked.connect(lambda: pomaceous.load_data(self))
+        self.selected_item.activated.connect(lambda: pomaceous.plot_selection(self))
+        self.export_button.clicked.connect(lambda: pomaceous.export_data(self))
 
 
     def clear_layout(self, layout):
