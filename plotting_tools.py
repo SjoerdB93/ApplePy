@@ -6,7 +6,6 @@ import pandas as pd
 import seaborn as sns
 
 def plotGraphOnCanvas(self, layout, selection = None, title = "", scale="linear"):
-    print(self.type)
     if self.type == "current":
         ylabel = "Current (mA)"
     elif self.type == "voltage":
