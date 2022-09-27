@@ -1,9 +1,11 @@
 from matplotlib.figure import Figure
+
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
 import pandas as pd
-import seaborn as sns
+#import seaborn as sns
 
 def plotGraphOnCanvas(self, layout, selection = None, title = "", scale="linear"):
     if self.type == "current":
@@ -51,7 +53,7 @@ def plotgGraphFigure(df, canvas, selection = None, filename="", xlim=None, title
         time_diff = []
         for i in range(len(time)):
             if i != len(time) - 1:
-                time_diff.append(time[i] - time[i+1] + 1)
+                time_diff.append(time[i+1] - time[i] - 1)
             else:
                 time_diff.append(0)
             i += 1
@@ -62,6 +64,36 @@ def plotgGraphFigure(df, canvas, selection = None, filename="", xlim=None, title
             time_diff.append(time[i] - i - 2)
             i += 1
         fig.plot(t, time_diff, label=filename, linestyle=linestyle, marker=marker)
+    elif selection == "average_delay_abs":
+        time_diff = []
+        total_delay = 0
+        average_delay = []
+        for i in range(len(time)):
+            if i != len(time) - 1:
+                time_diff.append(abs(time[i+1] - time[i] - 1))
+            else:
+                time_diff.append(0)
+            i += 1
+        for i in range(len(time)):
+            total_delay += time_diff[i]
+            average_delay.append(total_delay/(time[i] - time[0] + 1))
+        fig.plot(t, average_delay, label=filename, linestyle=linestyle, marker=marker)
+    elif selection == "average_delay":
+        time_diff = []
+        total_delay = 0
+        average_delay = []
+        for i in range(len(time)):
+            if i != len(time) - 1:
+                time_diff.append(time[i+1] - time[i] - 1)
+            else:
+                time_diff.append(0)
+            i += 1
+        for i in range(len(time)):
+            total_delay += time_diff[i]
+            average_delay.append(total_delay/(time[i] - time[0] + 1))
+        fig.plot(t, average_delay, label=filename, linestyle=linestyle, marker=marker)
+
+
     else:
         fig.plot(t, df[selection], label=filename, linestyle=linestyle, marker=marker)
     canvas.theplot.set_title(title)
@@ -74,7 +106,7 @@ class PlotWidget(FigureCanvas):
     def __init__(self, parent=None, xlabel=None, ylabel='Intensity (arb. u)', title="", scale="linear"):
         super(PlotWidget, self).__init__(Figure())
         self.setParent(parent)
-        sns.set_theme(style="whitegrid")
+        plt.style.use('seaborn-whitegrid')
         self.figure = Figure()
         self.canvas = FigureCanvas(self.figure)
         self.theplot = self.figure.add_subplot(111)

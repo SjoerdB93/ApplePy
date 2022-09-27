@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Pomaceous - Adam Logbook Viewer</string>
+   <string>ApplePy - Adam Logbook Viewer</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -149,6 +149,16 @@
         <item>
          <property name="text">
           <string>Total delay</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Average delay</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Average delay (absolute)</string>
          </property>
         </item>
         <item>
