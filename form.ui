@@ -153,6 +153,16 @@
         </item>
         <item>
          <property name="text">
+          <string>Average delay</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Average delay (absolute)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
           <string>Time vs ticks</string>
          </property>
         </item>
