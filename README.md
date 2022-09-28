@@ -14,4 +14,6 @@ the Adam deposition system at Linköping University as saved by the EVA control 
 
 The program should be relatively straight forward to use. A log file can be loaded using the "load data" button, and the relevant parameter can be chosen using the dropdown menu. The selected graph can be exported as well in a 2-column text file.
 
-A .exe executable compatible with the Adam computer (running Windows 7) should be available under "releases" on the associated Github page (https://github.com/SjoerdB93/ApplePy). Alternatively the main.py program can be launched using a python environment of choice. The software is tested on Fedora Linux, Windows 11 and Windows 7 but should be compatible with MacOS as well.
+A .exe executable compatible with the Adam computer (running Windows 7) should be available under "releases" on the associated Github page (https://github.com/SjoerdB93/ApplePy). Alternatively the main.py program can be launched using a python environment of choice. The software is tested on Fedora Linux, Windows 11 and Windows 7 but should be compatible with MacOS as well. Given how this tool is only useful for users of this particular deposition system, there are no plans to release this software on Flathub for Linux, but I may provide clear and tested instructions on how to build a Flatpak version of this software in the future.
+
+For any questions or support, raise an issue on the Github page, or send me an email at info@sjoerd.se.
