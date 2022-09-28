@@ -5,6 +5,7 @@ import pandas as pd
 from pathlib import Path
 import numpy as np
 
+
 def load_data(self):
     file_path = get_path(self)
     if file_path != "":
@@ -15,8 +16,7 @@ def load_data(self):
             plot_selection(self)
 
 
-
-def saveFileDialog(self, documenttype="Text file (*.txt)", title = "Save file"):
+def saveFileDialog(self, documenttype="Text file (*.txt)", title="Save file"):
     options = QFileDialog.Options()
     options |= QFileDialog.DontUseNativeDialog
     filename = f"{self.filename[:-4]}_{self.selection}.txt"
@@ -24,9 +24,10 @@ def saveFileDialog(self, documenttype="Text file (*.txt)", title = "Save file"):
                                            documenttype, options=options)
     return fileName
 
+
 def export_data(self):
     if self.filename is not None:
-        path = saveFileDialog(self, title = "Save selected data")
+        path = saveFileDialog(self, title="Save selected data")
         filename = path[0]
         if filename[-4:] != ".txt":
             filename = filename + ".txt"
@@ -58,7 +59,8 @@ def plot_selection(self):
     if self.dataframe is not None:
         selection = get_selection(self)
         title = f"{selection} - {self.filename}"
-        self.plot_figure(title = title, selection=selection)
+        self.plot_figure(title=title, selection=selection)
+
 
 def get_selection(self):
     selection = str(self.selected_item.currentText())
@@ -106,21 +108,30 @@ def get_selection(self):
     elif selection == "Time vs ticks":
         selection = "time_vs_ticks"
         self.type = "ticks"
+    elif selection == "Average delay (absolute)":
+        selection = "average_delay_abs"
+        self.type = "delay_second"
+    elif selection == "Average delay":
+        selection = "average_delay"
+        self.type = "delay_second"
     else:
         self.type = "other"
+        self.selection = "coil1_current"
     self.selection = selection
     return selection
+
 
 def get_data(file_path):
     df = pd.read_csv(file_path, sep="\s+", decimal=",", skiprows=2)
     try:
         df.columns = ["time", "coil1_current", "coil2_current", "bias_voltage", "value3", "mdx2_current", "mdx2_power",
-                  "mdx2_voltage", "mdx1_current", "value11", "value12", "value13", "value14", "value15", "value17",
-                  "value18", "value16", "mdx1_power", "mdx1_voltage", "ar_flow", "n2_flow"]
+                      "mdx2_voltage", "mdx1_current", "value11", "value12", "value13", "value14", "value15", "value17",
+                      "value18", "value16", "mdx1_power", "mdx1_voltage", "ar_flow", "n2_flow"]
     except ValueError:
         print("Could not read file, are you sure this is an Adam log?")
         df = None
     return df
+
 
 def define_canvas(self):
     layout = self.graphlayout
@@ -130,7 +141,7 @@ def define_canvas(self):
 
 def load_empty(self):
     canvas = plotting_tools.PlotWidget(xlabel="X value", ylabel="Y Value",
-                                                    title="Plot")
+                                       title="Plot")
     create_layout(self, canvas, self.graphlayout)
 
 
@@ -145,5 +156,5 @@ def get_path(self, documenttype="Text file (*.txt);;All Files (*)"):
     options = dialog.Options()
     options |= QFileDialog.DontUseNativeDialog
     path = QFileDialog.getOpenFileName(self, "Open files", "",
-                                        documenttype, options=options)[0]
+                                       documenttype, options=options)[0]
     return path
