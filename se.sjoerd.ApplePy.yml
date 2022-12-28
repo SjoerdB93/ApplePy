@@ -1,0 +1,47 @@
+app-id: se.sjoerd.ApplePy
+runtime: org.kde.Platform
+runtime-version: '5.15-21.08'
+sdk: org.kde.Sdk
+base: com.riverbankcomputing.PyQt.BaseApp
+base-version: "5.15-21.08"
+command: runner.sh
+finish-args:
+  - --share=ipc
+  - --socket=fallback-x11
+  - --socket=wayland
+  - --share=network
+  - --filesystem=xdg-documents
+  - --device=dri
+modules:  
+  - python3-requirements.json
+ 
+        
+  - name: ApplePy
+    sources:
+      - type: file
+        path: apples.png
+      - type: file
+        path: se.sjoerd.ApplePy.desktop
+      - type: file
+        path: main.py
+      - type: file
+        path: CallUI.py
+      - type: file
+        path: plotting_tools.py
+      - type: file
+        path: applepy.py
+      - type: file
+        path: form.ui
+      - type: file
+        path: runner.sh
+
+
+    buildsystem: simple
+    build-commands:
+      - install -D se.sjoerd.ApplePy.desktop /app/share/applications/se.sjoerd.ApplePy.desktop
+      - install -D main.py /app/bin/main.py
+      - install -D CallUI.py /app/bin/CallUI.py
+      - install -D plotting_tools.py /app/bin/plotting_tools.py
+      - install -D applepy.py /app/bin/applepy.py
+      - install form.ui /app/bin/form.ui
+      - install -D runner.sh /app/bin/runner.sh   

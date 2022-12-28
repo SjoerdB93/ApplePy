@@ -10,114 +10,142 @@ def load_data(self):
     file_path = get_path(self)
     if file_path != "":
         data = get_data(file_path)
+        self.dataframe = data
         if data is not None:
             self.filename = Path(file_path).name
             self.dataframe = data
             plot_selection(self)
 
 
-def saveFileDialog(self, documenttype="Text file (*.txt)", title="Save file"):
+def save_file_dialog(self, selection_left, selection_right, documenttype="Text file (*.txt)", title="Save file"):
     options = QFileDialog.Options()
     options |= QFileDialog.DontUseNativeDialog
-    filename = f"{self.filename[:-4]}_{self.selection}.txt"
-    fileName = QFileDialog.getSaveFileName(self, title, filename,
+
+    filename_suggested = self.filename[:-4]
+    append = ""
+    selections = [selection_left, selection_right]
+    for value in selections:
+        if value != "None":
+            append += f"_{value}"
+
+    filename_suggested += f"{append}.txt"
+    filename = QFileDialog.getSaveFileName(self, title, filename_suggested,
                                            documenttype, options=options)
-    return fileName
+    return filename
 
 
 def export_data(self):
     if self.filename is not None:
-        path = saveFileDialog(self, title="Save selected data")
+        time_dataframe = self.dataframe["time"]
+        time = ["time"]
+        time.extend(time_dataframe.values.tolist())
+
+        selection_left = plotting_tools.get_ylabel_and_dfselection(get_selection(self, "left"))[1]
+        selection_right = plotting_tools.get_ylabel_and_dfselection(get_selection(self, "right"))[1]
+
+        path = save_file_dialog(self, selection_left, selection_right, "Save selected data")
         filename = path[0]
-        if filename[-4:] != ".txt":
-            filename = filename + ".txt"
+        if filename[:-4] != ".txt":
+            filename += ".txt"
+        ydata_left = [selection_left]
+        ydata_right = [selection_right]
+        if filename != "":
+            if selection_left == "Time vs ticks" or selection_left == "Delay per second" or selection_left == "Total delay" \
+                    or selection_left == "Average delay (absolute)" or selection_left == "Average delay":
+                ydata_left.extend(get_y_data_for_time_operatons(self, selection_left))
+            elif selection_left == "None":
+                ydata_left = None
+            else:
+                ydata_left.extend(self.dataframe[selection_left])
 
-        xdata = self.dataframe["time"]
-        if self.selection == "time_vs_ticks":
-            ydata = list(range(len(xdata)))
-        elif self.selection == "delay_second":
-            ydata = []
-            for i in range(len(xdata)):
-                if i != len(xdata) - 1:
-                    ydata.append(xdata[i] - xdata[i + 1] + 1)
-                else:
-                    ydata.append(0)
-                i += 1
-        elif self.selection == "delay_total":
-            ydata = []
-            for i in range(len(xdata)):
-                ydata.append(xdata[i] - i - 2)
-                i += 1
-        else:
-            ydata = self.dataframe[self.selection]
+            if selection_right == "Time vs ticks" or selection_right == "Delay per second" or \
+                    selection_right == "Total delay" or selection_right == "Average delay (absolute)" \
+                    or selection_right == "Average delay":
+                ydata_right.extend(get_y_data_for_time_operatons(self, selection_right))
+            elif selection_right == "None":
+                ydata_right = None
+            else:
+                print(selection_right)
+                ydata_right.extend(self.dataframe[selection_right])
 
-        array = np.stack([xdata, ydata], axis=1)
-        np.savetxt(filename, array, delimiter="\t")
+            total_stack = []
+            for value in [time, ydata_left, ydata_right]:
+                if value is not None:
+                    total_stack.append(value)
+
+            array = np.stack(total_stack, axis=1)
+            np.savetxt(filename, array, delimiter="\t", fmt="%s")
+
+
+def get_y_data_for_time_operatons(self, selection):
+    time = self.dataframe["time"]
+
+    if selection == "Time vs ticks":
+        y_data = list(range(len(time)))
+    elif selection == "Delay per second":
+        y_data = []
+        for i in range(len(time)):
+            if i != len(time) - 1:
+                y_data.append(time[i + 1] - time[i] - 1)
+            else:
+                y_data.append(0)
+            i += 1
+    elif selection == "Total delay":
+        y_data = []
+        for i in range(len(time)):
+            y_data.append(time[i] - i - 2)
+            i += 1
+    elif selection == "Average delay (absolute)":
+        time_diff = []
+        total_delay = 0
+        y_data = []
+        for i in range(len(time)):
+            if i != len(time) - 1:
+                time_diff.append(abs(time[i + 1] - time[i] - 1))
+            else:
+                time_diff.append(0)
+            i += 1
+        for i in range(len(time)):
+            total_delay += time_diff[i]
+            y_data.append(total_delay / (time[i] - time[0] + 1))
+    elif selection == "Average delay":
+        time_diff = []
+        total_delay = 0
+        y_data = []
+        for i in range(len(time)):
+            if i != len(time) - 1:
+                time_diff.append(time[i + 1] - time[i] - 1)
+            else:
+                time_diff.append(0)
+            i += 1
+        for i in range(len(time)):
+            total_delay += time_diff[i]
+            y_data.append(total_delay / (time[i] - time[0] + 1))
+    return y_data
 
 
 def plot_selection(self):
     if self.dataframe is not None:
-        selection = get_selection(self)
-        title = f"{selection} - {self.filename}"
-        self.plot_figure(title=title, selection=selection)
+        selection_left = get_selection(self, "left")
+        selection_right = get_selection(self, "right")
+        if selection_right != "None" and selection_left != "None":
+            title = f"{selection_left}, {selection_right} - {self.filename}"
+        else:
+            if selection_left == "None":
+                title = f"{selection_right} - {self.filename}"
+            elif selection_right == "None":
+                title = f"{selection_left} - {self.filename}"
+            else:
+                title = "Plot"
+
+        self.plot_figure(title=title, selection_left=selection_left, selection_right=selection_right)
 
 
-def get_selection(self):
-    selection = str(self.selected_item.currentText())
-    if selection == "Coil 1 current":
-        selection = "coil1_current"
-        self.type = "coil_current"
-    elif selection == "Coil 2 current":
-        selection = "coil2_current"
-        self.type = "coil_current"
-    elif selection == "Bias Voltage":
-        selection = "bias_voltage"
-        self.type = "voltage"
-    elif selection == "Value 3":
-        selection = "value3"
-    elif selection == "MDX 2 Current":
-        selection = "mdx2_current"
-        self.type = "current"
-    elif selection == "MDX 2 Voltage":
-        selection = "mdx2_voltage"
-        self.type = "voltage"
-    elif selection == "MDX 2 Power":
-        selection = "mdx2_power"
-        self.type = "power"
-    elif selection == "MDX 1 Power":
-        selection = "mdx1_power"
-        self.type = "power"
-    elif selection == "MDX 1 Current":
-        selection = "mdx1_current"
-        self.type = "current"
-    elif selection == "MDX 1 Voltage":
-        selection = "mdx1_voltage"
-        self.type = "voltage"
-    elif selection == "N2 Flow (SCCM)":
-        selection = "n2_flow"
-        self.type = "gas"
-    elif selection == "Ar Flow (SCCM)":
-        selection = "ar_flow"
-        self.type = "gas"
-    elif selection == "Delay per second":
-        selection = "delay_second"
-        self.type = "delay_second"
-    elif selection == "Total delay":
-        selection = "delay_total"
-        self.type = "delay_total"
-    elif selection == "Time vs ticks":
-        selection = "time_vs_ticks"
-        self.type = "ticks"
-    elif selection == "Average delay (absolute)":
-        selection = "average_delay_abs"
-        self.type = "delay_second"
-    elif selection == "Average delay":
-        selection = "average_delay"
-        self.type = "delay_second"
-    else:
-        self.type = "other"
-        self.selection = "coil1_current"
-    self.selection = selection
+def get_selection(self, axis):
+    if axis == "left":
+        selection = str(self.selected_item.currentText())
+    if axis == "right":
+        selection = str(self.selected_item_right.currentText())
     return selection
 
 

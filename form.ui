@@ -16,18 +16,11 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout">
+     <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
        <widget class="QPushButton" name="load_data_button">
         <property name="text">
          <string>Load data</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="Line" name="line">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
         </property>
        </widget>
       </item>
@@ -39,6 +32,20 @@
        </widget>
       </item>
       <item>
+       <widget class="Line" name="line">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Left-hand axis:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QComboBox" name="selected_item">
         <property name="minimumSize">
          <size>
@@ -46,6 +53,11 @@
           <height>0</height>
          </size>
         </property>
+        <item>
+         <property name="text">
+          <string>None</string>
+         </property>
+        </item>
         <item>
          <property name="text">
           <string>Bias Voltage</string>
@@ -169,6 +181,155 @@
        </widget>
       </item>
       <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Right-hand axis:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="selected_item_right">
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>0</height>
+         </size>
+        </property>
+        <item>
+         <property name="text">
+          <string>None</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Bias Voltage</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Coil 1 current</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Coil 2 current</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>MDX 1 Power</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>MDX 1 Current</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>MDX 1 Voltage</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>MDX 2 Power</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>MDX 2 Current</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>MDX 2 Voltage</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Ar Flow (SCCM)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>N2 Flow (SCCM)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>value11</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>value12</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>value13</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>value14</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>value15</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>value16</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>value17</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>value18</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Delay per second</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Total delay</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Average delay</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Average delay (absolute)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Time vs ticks</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="seperate_axes">
+        <property name="text">
+         <string>Use seperate axes</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="Line" name="line_2">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -187,13 +348,6 @@
          </size>
         </property>
        </spacer>
-      </item>
-      <item>
-       <widget class="Line" name="line_4">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
       </item>
      </layout>
     </item>
